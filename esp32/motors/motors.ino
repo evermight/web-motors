@@ -2,22 +2,7 @@
 #include <HTTPClient.h>
 #include "config.h"
 #include "motor.h"
-
-void get_network_info(){
-    if(WiFi.status() == WL_CONNECTED) {
-        Serial.print("[*] Network information for ");
-        Serial.println(SSID);
-
-        Serial.println("[+] BSSID : " + WiFi.BSSIDstr());
-        Serial.print("[+] Gateway IP : ");
-        Serial.println(WiFi.gatewayIP());
-        Serial.print("[+] Subnet Mask : ");
-        Serial.println(WiFi.subnetMask());
-        Serial.println((String)"[+] RSSI : " + WiFi.RSSI() + " dB");
-        Serial.print("[+] ESP32 IP : ");
-        Serial.println(WiFi.localIP());
-    }
-}
+#include "wireless-network.h"
 
 void setup() {
   initialize_motors();
@@ -26,19 +11,7 @@ void setup() {
 
   // Connect to internet
   delay(1000);
-  WiFi.mode(WIFI_STA); //Optional
-  WiFi.begin(SSID, SSID_PASS);
-  Serial.println("\nConnecting");
-
-  while(WiFi.status() != WL_CONNECTED){
-      Serial.print(".");
-      delay(100);
-  }
-
-  Serial.println("\nConnected to the WiFi network");
-  Serial.print("Local ESP32 IP: ");
-  Serial.println(WiFi.localIP());
-  
+  connect_network(SSID, SSID_PASS);
   get_network_info();
 }
 
