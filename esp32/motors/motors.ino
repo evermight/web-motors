@@ -1,5 +1,3 @@
-#include <WiFi.h>
-#include <HTTPClient.h>
 #include "config.h"
 #include "motor.h"
 #include "wireless-network.h"
@@ -34,9 +32,11 @@ void setup() {
 
 void loop() {
   delay(100);
-  if(WiFi.status() != WL_CONNECTED)
-    return;
   
+  if(!connected_to_network()) {
+    return;
+  }
+
   ApiResponse response = api_get(API_URL);
   if(response.httpResponseCode <= 0)
     return;

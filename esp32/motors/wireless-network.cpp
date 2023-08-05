@@ -2,6 +2,10 @@
 #include <WiFi.h>
 #include "wireless-network.h"
 
+boolean connected_to_network() {
+  return WiFi.status() == WL_CONNECTED;
+}
+
 void get_network_info(){
   if(WiFi.status() == WL_CONNECTED) {
     Serial.println("[+] SSID : " + WiFi.SSID());
