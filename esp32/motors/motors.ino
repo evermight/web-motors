@@ -2,31 +2,10 @@
 #include <HTTPClient.h>
 #include "config.h"
 
-const char* ssid = SSID;
-const char* ssidpass = SSIDPASS;
-String apiUrl = APIURL;
-
-// Motor A
-int motor1Pin1 = 27;
-int motor1Pin2 = 26;
-int enable1Pin = 14; 
-// Motor B
-int motor2Pin1 = 33;
-int motor2Pin2 = 32;
-int enable2Pin = 12;
-
-// Setting PWM properties
-const int pwmChannel1 = 0;
-const int pwmChannel2 = 1;
-const int freq = 30000;
-const int resolution = 8;
-int dutyCycle = 255;
-
-
 void get_network_info(){
     if(WiFi.status() == WL_CONNECTED) {
         Serial.print("[*] Network information for ");
-        Serial.println(ssid);
+        Serial.println(SSID);
 
         Serial.println("[+] BSSID : " + WiFi.BSSIDstr());
         Serial.print("[+] Gateway IP : ");
@@ -39,32 +18,79 @@ void get_network_info(){
     }
 }
 
+void move_motors(String motion) {
+  if(motion == "ff") {
+    // Move both motors forwards at maximum speed
+    digitalWrite(MOTOR1_PIN1, LOW);
+    digitalWrite(MOTOR1_PIN2, HIGH);
+    digitalWrite(MOTOR2_PIN1, LOW);
+    digitalWrite(MOTOR2_PIN2, HIGH);
+  } else if(motion == "fs") {
+    // Move motor 1 forwards at maximum speed
+    digitalWrite(MOTOR1_PIN1, LOW);
+    digitalWrite(MOTOR1_PIN2, HIGH);
+    digitalWrite(MOTOR2_PIN1, LOW);
+    digitalWrite(MOTOR2_PIN2, LOW);
+  } else if(motion == "sf") {
+    // Move motor 2 forwards at maximum speed
+    digitalWrite(MOTOR1_PIN1, LOW);
+    digitalWrite(MOTOR1_PIN2, LOW);
+    digitalWrite(MOTOR2_PIN1, LOW);
+    digitalWrite(MOTOR2_PIN2, HIGH);
+  } else if(motion == "bf") {
+    // Move motor 1 backwards and motor 2 forwards at maximum speed
+    digitalWrite(MOTOR1_PIN1, HIGH);
+    digitalWrite(MOTOR1_PIN2, LOW);
+    digitalWrite(MOTOR2_PIN1, LOW);
+    digitalWrite(MOTOR2_PIN2, HIGH);
+  } else if(motion == "fb") {
+    // Move motor 1 backwards and motor 2 forwards at maximum speed
+    digitalWrite(MOTOR1_PIN1, LOW);
+    digitalWrite(MOTOR1_PIN2, HIGH);
+    digitalWrite(MOTOR2_PIN1, HIGH);
+    digitalWrite(MOTOR2_PIN2, LOW);
+  } else if(motion == "bb") {
+    // Move both motors backwards at maximum speed
+    digitalWrite(MOTOR1_PIN1, HIGH);
+    digitalWrite(MOTOR1_PIN2, LOW);
+    digitalWrite(MOTOR2_PIN1, HIGH);
+    digitalWrite(MOTOR2_PIN2, LOW);
+  } else {
+    // Stop both motors
+    digitalWrite(MOTOR1_PIN1, LOW);
+    digitalWrite(MOTOR1_PIN2, LOW);
+    digitalWrite(MOTOR2_PIN1, LOW);
+    digitalWrite(MOTOR2_PIN2, LOW);
+  }
+  delay(100);
+}
+
 void setup() {
   // sets the pins as outputs:
-  pinMode(motor1Pin1, OUTPUT);
-  pinMode(motor1Pin2, OUTPUT);
-  pinMode(enable1Pin, OUTPUT);
-  pinMode(motor2Pin1, OUTPUT);
-  pinMode(motor2Pin2, OUTPUT);
-  pinMode(enable2Pin, OUTPUT);
+  pinMode(MOTOR1_PIN1, OUTPUT);
+  pinMode(MOTOR1_PIN2, OUTPUT);
+  pinMode(ENABLE1_PIN, OUTPUT);
+  pinMode(MOTOR2_PIN1, OUTPUT);
+  pinMode(MOTOR2_PIN2, OUTPUT);
+  pinMode(ENABLE2_PIN, OUTPUT);
 
   
   // configure LED PWM functionalitites
-  ledcSetup(pwmChannel1, freq, resolution);
-  ledcSetup(pwmChannel2, freq, resolution);
+  ledcSetup(PWM_CHANNEL_1, PWM_FREQ, PWM_RESOLUTION);
+  ledcSetup(PWM_CHANNEL_2, PWM_FREQ, PWM_RESOLUTION);
   
   // attach the channel to the GPIO to be controlled
-  ledcAttachPin(enable1Pin, pwmChannel1);
-  ledcAttachPin(enable2Pin, pwmChannel2);
-  ledcWrite(pwmChannel1, dutyCycle);
-  ledcWrite(pwmChannel2, dutyCycle);
+  ledcAttachPin(ENABLE1_PIN, PWM_CHANNEL_1);
+  ledcAttachPin(ENABLE2_PIN, PWM_CHANNEL_2);
+  ledcWrite(PWM_CHANNEL_1, PWM_DUTY_CYCLE);
+  ledcWrite(PWM_CHANNEL_2, PWM_DUTY_CYCLE);
 
   Serial.begin(115200);
 
   // Connect to internet
   delay(1000);
   WiFi.mode(WIFI_STA); //Optional
-  WiFi.begin(ssid, ssidpass);
+  WiFi.begin(SSID, SSID_PASS);
   Serial.println("\nConnecting");
 
   while(WiFi.status() != WL_CONNECTED){
@@ -86,7 +112,7 @@ void loop() {
 
   HTTPClient http;
 
-  
+  String apiUrl = API_URL;
   http.begin(apiUrl.c_str());
   
   // If you need Node-RED/server authentication, insert user and password below
@@ -99,49 +125,5 @@ void loop() {
 
   String motion = http.getString();
   motion.trim();
-  Serial.println(motion);
-  if(motion == "ff") {
-    // Move both motors forwards at maximum speed
-    digitalWrite(motor1Pin1, LOW);
-    digitalWrite(motor1Pin2, HIGH);
-    digitalWrite(motor2Pin1, LOW);
-    digitalWrite(motor2Pin2, HIGH);
-  } else if(motion == "fs") {
-    // Move motor 1 forwards at maximum speed
-    digitalWrite(motor1Pin1, LOW);
-    digitalWrite(motor1Pin2, HIGH);
-    digitalWrite(motor2Pin1, LOW);
-    digitalWrite(motor2Pin2, LOW);
-  } else if(motion == "sf") {
-    // Move motor 2 forwards at maximum speed
-    digitalWrite(motor1Pin1, LOW);
-    digitalWrite(motor1Pin2, LOW);
-    digitalWrite(motor2Pin1, LOW);
-    digitalWrite(motor2Pin2, HIGH);
-  } else if(motion == "bf") {
-    // Move motor 1 backwards and motor 2 forwards at maximum speed
-    digitalWrite(motor1Pin1, HIGH);
-    digitalWrite(motor1Pin2, LOW);
-    digitalWrite(motor2Pin1, LOW);
-    digitalWrite(motor2Pin2, HIGH);
-  } else if(motion == "fb") {
-    // Move motor 1 backwards and motor 2 forwards at maximum speed
-    digitalWrite(motor1Pin1, LOW);
-    digitalWrite(motor1Pin2, HIGH);
-    digitalWrite(motor2Pin1, HIGH);
-    digitalWrite(motor2Pin2, LOW);
-  } else if(motion == "bb") {
-    // Move both motors backwards at maximum speed
-    digitalWrite(motor1Pin1, HIGH);
-    digitalWrite(motor1Pin2, LOW);
-    digitalWrite(motor2Pin1, HIGH);
-    digitalWrite(motor2Pin2, LOW);
-  } else {
-    // Stop both motors
-    digitalWrite(motor1Pin1, LOW);
-    digitalWrite(motor1Pin2, LOW);
-    digitalWrite(motor2Pin1, LOW);
-    digitalWrite(motor2Pin2, LOW);
-  }
-  delay(100);
+  move_motors(motion);
 }
