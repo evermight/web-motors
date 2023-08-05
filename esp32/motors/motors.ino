@@ -3,7 +3,7 @@
 #include "config.h"
 
 const char* ssid = SSID;
-const char* wifipass = SSIDPASS;
+const char* ssidpass = SSIDPASS;
 String apiUrl = APIURL;
 
 // Motor A
@@ -64,7 +64,7 @@ void setup() {
   // Connect to internet
   delay(1000);
   WiFi.mode(WIFI_STA); //Optional
-  WiFi.begin(ssid, wifipass);
+  WiFi.begin(ssid, ssidpass);
   Serial.println("\nConnecting");
 
   while(WiFi.status() != WL_CONNECTED){
