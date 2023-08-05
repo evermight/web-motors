@@ -1,9 +1,10 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
+#include "config.h"
 
-const char* ssid = "";
-const char* password = "";
-String serverName = "http://192.168.0.51/motion.txt";
+const char* ssid = SSID;
+const char* wifipass = SSIDPASS;
+String apiUrl = APIURL;
 
 // Motor A
 int motor1Pin1 = 27;
@@ -63,7 +64,7 @@ void setup() {
   // Connect to internet
   delay(1000);
   WiFi.mode(WIFI_STA); //Optional
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid, wifipass);
   Serial.println("\nConnecting");
 
   while(WiFi.status() != WL_CONNECTED){
@@ -86,7 +87,7 @@ void loop() {
   HTTPClient http;
 
   
-  http.begin(serverName.c_str());
+  http.begin(apiUrl.c_str());
   
   // If you need Node-RED/server authentication, insert user and password below
   //http.setAuthorization("REPLACE_WITH_SERVER_USERNAME", "REPLACE_WITH_SERVER_PASSWORD");
