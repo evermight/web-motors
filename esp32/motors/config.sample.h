@@ -1,4 +1,4 @@
-#define SSID "wifi network name"
+#define SSID_NAME "wifi network name"
 #define SSID_PASS "wifi network pass"
 #define API_URL "http://url/motion.txt"
 

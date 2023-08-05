@@ -26,7 +26,7 @@ void setup() {
 
   // Connect to internet
   delay(1000);
-  connect_network(SSID, SSID_PASS);
+  connect_network(SSID_NAME, SSID_PASS);
   get_network_info();
 }
 
