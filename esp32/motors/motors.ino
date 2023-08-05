@@ -4,8 +4,30 @@
 #include "motor.h"
 #include "wireless-network.h"
 
+MotorDetails get_motor_details() {
+  MotorDetails motor;
+  motor.motor1Pin1 = MOTOR1_PIN1;
+  motor.motor1Pin2 = MOTOR1_PIN2;
+  motor.enable1Pin = ENABLE1_PIN;
+  motor.motor2Pin1 = MOTOR2_PIN1;
+  motor.motor2Pin2 = MOTOR2_PIN2;
+  motor.enable2Pin = ENABLE2_PIN;
+  return motor;
+}
+
+PwmDetails get_pwm_details() {
+  PwmDetails pwm;
+  pwm.channel1 = PWM_CHANNEL_1;
+  pwm.channel2 = PWM_CHANNEL_2;
+  pwm.freq = PWM_FREQ;
+  pwm.resolution = PWM_RESOLUTION;
+  pwm.dutyCycle = PWM_DUTY_CYCLE;
+  return pwm;
+}
+
 void setup() {
-  initialize_motors();
+
+  initialize_motors(get_motor_details(), get_pwm_details());
 
   Serial.begin(115200);
 
@@ -35,5 +57,5 @@ void loop() {
 
   String motion = http.getString();
   motion.trim();
-  move_motors(motion);
+  move_motors(motion, get_motor_details());
 }
