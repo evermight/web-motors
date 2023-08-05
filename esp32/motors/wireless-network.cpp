@@ -4,6 +4,7 @@
 
 void get_network_info(){
   if(WiFi.status() == WL_CONNECTED) {
+    Serial.println("[+] SSID : " + WiFi.SSID());
     Serial.println("[+] BSSID : " + WiFi.BSSIDstr());
     Serial.print("[+] Gateway IP : ");
     Serial.println(WiFi.gatewayIP());
