@@ -3,7 +3,7 @@
 
 struct ApiResponse {
   int httpResponseCode;
-  String motion;
+  char motion[2];
 };
 
 ApiResponse api_get(String apiUrl);

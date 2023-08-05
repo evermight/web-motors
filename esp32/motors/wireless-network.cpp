@@ -3,8 +3,8 @@
 #include "wireless-network.h"
 
 void get_network_info(){
+  /*
   if(WiFi.status() == WL_CONNECTED) {
-    Serial.println("[+] SSID : " + WiFi.SSID());
     Serial.println("[+] BSSID : " + WiFi.BSSIDstr());
     Serial.print("[+] Gateway IP : ");
     Serial.println(WiFi.gatewayIP());
@@ -14,6 +14,7 @@ void get_network_info(){
     Serial.print("[+] ESP32 IP : ");
     Serial.println(WiFi.localIP());
   }
+  */
 }
 
 void connect_network(const char* ssid, const char* pass) {

@@ -1,6 +1,6 @@
 #include "BluetoothSerial.h"
 #include <WiFi.h>
-//#include <HTTPClient.h>
+#include <HTTPClient.h>
 #include "config.h"
 #include "motor.h"
 #include "wireless-network.h"
@@ -11,53 +11,66 @@
 #endif
 
 boolean connecting = false;
-
 const char* SSID_NAME = "em80";
 const char* SSID_PASS = "coldtemp*2013";
 const char* API_URL = "http://192.168.0.51/motion.txt";
-/*
-const char* SSID_NAME = "";
-const char* SSID_PASS = "";
-const char* API_URL = "";
-*/
-//BluetoothSerial SerialBT;
 
-  MotorDetails motor = {
-    .motor1Pin1 = MOTOR1_PIN1,
-    .motor1Pin2 = MOTOR1_PIN2,
-    .enable1Pin = ENABLE1_PIN,
-    .motor2Pin1 = MOTOR2_PIN1,
-    .motor2Pin2 = MOTOR2_PIN2,
-    .enable2Pin = ENABLE2_PIN
-  };
-  
-  PwmDetails pwm = {
-    .channel1 = PWM_CHANNEL_1,
-    .channel2 = PWM_CHANNEL_2,
-    .freq = PWM_FREQ,
-    .resolution = PWM_RESOLUTION,
-    .dutyCycle = PWM_DUTY_CYCLE
-  };
+BluetoothSerial SerialBT;
+MotorDetails motor = {
+  .motor1Pin1 = MOTOR1_PIN1,
+  .motor1Pin2 = MOTOR1_PIN2,
+  .enable1Pin = ENABLE1_PIN,
+  .motor2Pin1 = MOTOR2_PIN1,
+  .motor2Pin2 = MOTOR2_PIN2,
+  .enable2Pin = ENABLE2_PIN
+};
+
+PwmDetails pwm = {
+  .channel1 = PWM_CHANNEL_1,
+  .channel2 = PWM_CHANNEL_2,
+  .freq = PWM_FREQ,
+  .resolution = PWM_RESOLUTION,
+  .dutyCycle = PWM_DUTY_CYCLE
+};
 
 void setup() {
   Serial.begin(115200);
 
-  //SerialBT.begin("ESP32test"); //Bluetooth device name
+  SerialBT.begin("ESP32test"); //Bluetooth device name
   Serial.println("Device started, pair with bluetooth!");
- 
+  
   initialize_motors(motor, pwm);
-
+/*
   // Connect to internet
   delay(1000);
   connect_network(SSID_NAME, SSID_PASS);
-
+*/
 }
 
 void loop() {
 /*
+  if (Serial.available()) {
+    Serial.print("_");
+    SerialBT.write(Serial.read());
+
+  }
   if (SerialBT.available()) {
     String payload = SerialBT.readStringUntil('\n');
     payload.trim();
+
+    if(payload == "device_status") {
+      SerialBT.println(device_status);
+
+    } else if(payload == "network_info") {
+      String network_info = get_network_info();
+      SerialBT.println(network_info);
+
+    } else if(payload == "network_vars") {
+      String network_vars = "SSID_NAME="+SSID_NAME+"\n";
+      network_vars += "SSID_PASS=[redacted]\n";
+      network_vars += "API_URL="+API_URL+"\n";
+      SerialBT.println(network_vars);
+
     if(payload == "connect") {
       connecting = true;
       
@@ -69,7 +82,10 @@ void loop() {
       
     } else if (strncmp(payload.c_str(), "API_URL=", 4) == 0) {
       API_URL = payload.substring(4).c_str();
-
+      
+    } else {
+      //Serial.print("__");
+      Serial.print(SerialBT.readStringUntil('\n'));
     }
     delay(20);
   }
@@ -87,7 +103,7 @@ void loop() {
   ApiResponse response = api_get(API_URL);
   if(response.httpResponseCode <= 0)
     return;
-    
+
   move_motors(response.motion, motor);
 
 }

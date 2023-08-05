@@ -7,7 +7,8 @@ ApiResponse api_get(String apiUrl) {
   HTTPClient http;
 
   response.httpResponseCode = -1;
-  response.motion = "";
+  response.motion[0] = 's';
+  response.motion[1] = 's';
 
   http.begin(apiUrl);
   // If you need Node-RED/server authentication, insert user and password below
@@ -20,7 +21,7 @@ ApiResponse api_get(String apiUrl) {
 
   String motion = http.getString();
   motion.trim();
-  response.motion = motion;
-
+  motion.toCharArray(response.motion, sizeof(response.motion));
+ 
   return response;
 }

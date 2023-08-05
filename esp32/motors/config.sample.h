@@ -1,7 +1,3 @@
-#define SSID "wifi network name"
-#define SSID_PASS "wifi network pass"
-#define API_URL "http://url/motion.txt"
-
 #define PWM_FREQ 30000
 #define PWM_RESOLUTION 8
 #define PWM_DUTY_CYCLE 255

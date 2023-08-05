@@ -19,7 +19,7 @@ struct PwmDetails {
   int dutyCycle;
 };
 
-void move_motors(String motion, MotorDetails motor);
+void move_motors(char motion[2], MotorDetails motor);
 
 void initialize_motors(MotorDetails motor, PwmDetails pwm);
 

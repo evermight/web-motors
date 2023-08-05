@@ -20,38 +20,38 @@ void initialize_motors(MotorDetails motor, PwmDetails pwm) {
   ledcWrite(pwm.channel1, pwm.dutyCycle);
   ledcWrite(pwm.channel2, pwm.dutyCycle);
 }
-void move_motors(String motion, MotorDetails motor) {
-  if(motion == "ff") {
+void move_motors(char motion[2], MotorDetails motor) {
+  if(motion[0] == 'f' && motion[1] == 'f') {
     // Move both motors forwards at maximum speed
     digitalWrite(motor.motor1Pin1, LOW);
     digitalWrite(motor.motor1Pin2, HIGH);
     digitalWrite(motor.motor2Pin1, LOW);
     digitalWrite(motor.motor2Pin2, HIGH);
-  } else if(motion == "fs") {
+  } else if(motion[0] == 'f' && motion[1] == 's') {
     // Move motor 1 forwards at maximum speed
     digitalWrite(motor.motor1Pin1, LOW);
     digitalWrite(motor.motor1Pin2, HIGH);
     digitalWrite(motor.motor2Pin1, LOW);
     digitalWrite(motor.motor2Pin2, LOW);
-  } else if(motion == "sf") {
+  } else if(motion[0] == 's' && motion[1] == 'f') {
     // Move motor 2 forwards at maximum speed
     digitalWrite(motor.motor1Pin1, LOW);
     digitalWrite(motor.motor1Pin2, LOW);
     digitalWrite(motor.motor2Pin1, LOW);
     digitalWrite(motor.motor2Pin2, HIGH);
-  } else if(motion == "bf") {
+  } else if(motion[0] == 'b' && motion[1] == 'f') {
     // Move motor 1 backwards and motor 2 forwards at maximum speed
     digitalWrite(motor.motor1Pin1, HIGH);
     digitalWrite(motor.motor1Pin2, LOW);
     digitalWrite(motor.motor2Pin1, LOW);
     digitalWrite(motor.motor2Pin2, HIGH);
-  } else if(motion == "fb") {
+  } else if(motion[0] == 'f' && motion[1] == 'b') {
     // Move motor 1 backwards and motor 2 forwards at maximum speed
     digitalWrite(motor.motor1Pin1, LOW);
     digitalWrite(motor.motor1Pin2, HIGH);
     digitalWrite(motor.motor2Pin1, HIGH);
     digitalWrite(motor.motor2Pin2, LOW);
-  } else if(motion == "bb") {
+  } else if(motion[0] == 'b' && motion[1] == 'b') {
     // Move both motors backwards at maximum speed
     digitalWrite(motor.motor1Pin1, HIGH);
     digitalWrite(motor.motor1Pin2, LOW);
