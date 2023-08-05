@@ -2,21 +2,21 @@
 #define MOTOR_FUNCTIONS
 
 struct MotorDetails {
-  int motor1Pin1;
-  int motor1Pin2;
-  int enable1Pin;
+  byte motor1Pin1;
+  byte motor1Pin2;
+  byte enable1Pin;
   
-  int motor2Pin1;
-  int motor2Pin2;
-  int enable2Pin;
+  byte motor2Pin1;
+  byte motor2Pin2;
+  byte enable2Pin;
 };
 
 struct PwmDetails {
-  int channel1;
-  int channel2;
+  byte channel1;
+  byte channel2;
   int freq;
-  int resolution;
-  int dutyCycle;
+  byte resolution;
+  byte dutyCycle;
 };
 
 void move_motors(String motion, MotorDetails motor);
