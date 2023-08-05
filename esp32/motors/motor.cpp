@@ -64,5 +64,4 @@ void move_motors(String motion, MotorDetails motor) {
     digitalWrite(motor.motor2Pin1, LOW);
     digitalWrite(motor.motor2Pin2, LOW);
   }
-  delay(100);
 }

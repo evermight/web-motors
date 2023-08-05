@@ -3,6 +3,7 @@
 #include "config.h"
 #include "motor.h"
 #include "wireless-network.h"
+#include "api.h";
 
 MotorDetails get_motor_details() {
   MotorDetails motor;
@@ -38,24 +39,13 @@ void setup() {
 }
 
 void loop() {
-
+  delay(100);
   if(WiFi.status() != WL_CONNECTED)
     return;
-
-  HTTPClient http;
-
-  String apiUrl = API_URL;
-  http.begin(apiUrl.c_str());
   
-  // If you need Node-RED/server authentication, insert user and password below
-  //http.setAuthorization("REPLACE_WITH_SERVER_USERNAME", "REPLACE_WITH_SERVER_PASSWORD");
-  
-  // Send HTTP GET request
-  int httpResponseCode = http.GET();
-  if(httpResponseCode <= 0)
+  ApiResponse response = api_get(API_URL);
+  if(response.httpResponseCode <= 0)
     return;
 
-  String motion = http.getString();
-  motion.trim();
-  move_motors(motion, get_motor_details());
+  move_motors(response.motion, get_motor_details());
 }
