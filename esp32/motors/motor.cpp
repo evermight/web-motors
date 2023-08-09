@@ -21,6 +21,7 @@ void initialize_motors(MotorDetails motor, PwmDetails pwm) {
   ledcWrite(pwm.channel2, pwm.dutyCycle);
 }
 void move_motors(char motion[2], MotorDetails motor) {
+  Serial.println(motion);
   if(motion[0] == 'f' && motion[1] == 'f') {
     // Move both motors forwards at maximum speed
     digitalWrite(motor.motor1Pin1, LOW);
@@ -46,6 +47,7 @@ void move_motors(char motion[2], MotorDetails motor) {
     digitalWrite(motor.motor2Pin1, LOW);
     digitalWrite(motor.motor2Pin2, HIGH);
   } else if(motion[0] == 'f' && motion[1] == 'b') {
+    Serial.println("in");
     // Move motor 1 backwards and motor 2 forwards at maximum speed
     digitalWrite(motor.motor1Pin1, LOW);
     digitalWrite(motor.motor1Pin2, HIGH);

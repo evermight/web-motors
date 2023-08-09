@@ -1,20 +1,17 @@
-#include "BluetoothSerial.h"
+//#include "BluetoothSerial.h"
 #include <WiFi.h>
-//#include <HTTPClient.h>
+#include <HTTPClient.h>
 #include "config.h"
 #include "motor.h"
 #include "wireless-network.h"
 #include "api.h";
-
+/*
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED)
 #error Bluetooth is not enabled! Please run `make menuconfig` to and enable it
 #endif
-
+*/
 boolean connecting = false;
 
-const char* SSID_NAME = "em80";
-const char* SSID_PASS = "coldtemp*2013";
-const char* API_URL = "http://192.168.0.51/motion.txt";
 /*
 const char* SSID_NAME = "";
 const char* SSID_PASS = "";
@@ -22,22 +19,22 @@ const char* API_URL = "";
 */
 //BluetoothSerial SerialBT;
 
-  MotorDetails motor = {
-    .motor1Pin1 = MOTOR1_PIN1,
-    .motor1Pin2 = MOTOR1_PIN2,
-    .enable1Pin = ENABLE1_PIN,
-    .motor2Pin1 = MOTOR2_PIN1,
-    .motor2Pin2 = MOTOR2_PIN2,
-    .enable2Pin = ENABLE2_PIN
-  };
-  
-  PwmDetails pwm = {
-    .channel1 = PWM_CHANNEL_1,
-    .channel2 = PWM_CHANNEL_2,
-    .freq = PWM_FREQ,
-    .resolution = PWM_RESOLUTION,
-    .dutyCycle = PWM_DUTY_CYCLE
-  };
+MotorDetails motor = {
+  .motor1Pin1 = MOTOR1_PIN1,
+  .motor1Pin2 = MOTOR1_PIN2,
+  .enable1Pin = ENABLE1_PIN,
+  .motor2Pin1 = MOTOR2_PIN1,
+  .motor2Pin2 = MOTOR2_PIN2,
+  .enable2Pin = ENABLE2_PIN
+};
+
+PwmDetails pwm = {
+  .channel1 = PWM_CHANNEL_1,
+  .channel2 = PWM_CHANNEL_2,
+  .freq = PWM_FREQ,
+  .resolution = PWM_RESOLUTION,
+  .dutyCycle = PWM_DUTY_CYCLE
+};
 
 void setup() {
   Serial.begin(115200);
@@ -54,7 +51,11 @@ void setup() {
 }
 
 void loop() {
-/*
+  /*
+  if(Serial.available()) {
+    SerialBT.write(Serial.read());
+    delay(20);
+  }
   if (SerialBT.available()) {
     String payload = SerialBT.readStringUntil('\n');
     payload.trim();
@@ -73,13 +74,13 @@ void loop() {
     }
     delay(20);
   }
-*/
+
   if(connecting) {
     delay(1000);
     connect_network(SSID_NAME, SSID_PASS);
     connecting = false;
   }
-
+*/
   delay(100);  
   if(WiFi.status() != WL_CONNECTED)
     return;
@@ -87,7 +88,7 @@ void loop() {
   ApiResponse response = api_get(API_URL);
   if(response.httpResponseCode <= 0)
     return;
-    
+  //Serial.println(response.motion);
   move_motors(response.motion, motor);
 
 }

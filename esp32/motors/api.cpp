@@ -21,7 +21,6 @@ ApiResponse api_get(String apiUrl) {
 
   String motion = http.getString();
   motion.trim();
-  motion.toCharArray(response.motion, sizeof(response.motion));
- 
+  motion.toCharArray(response.motion, sizeof(response.motion)+1);
   return response;
 }
