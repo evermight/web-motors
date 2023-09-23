@@ -19,7 +19,7 @@ struct PwmDetails {
   byte dutyCycle;
 };
 
-void move_motors(String motion, MotorDetails motor);
+void move_motors(String motion, MotorDetails motor, PwmDetails pwm);
 
 void initialize_motors(MotorDetails motor, PwmDetails pwm);
 
