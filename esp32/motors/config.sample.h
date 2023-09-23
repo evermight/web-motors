@@ -1,7 +1,5 @@
-#define SSID_NAME "wifi network name"
-#define SSID_PASS "wifi network pass"
-#define SSID_NAME2 "wifi network name"
-#define SSID_PASS2 "wifi network pass"
+#define SSID_NAMES {"ssid-primary", "ssid-backup"}
+#define SSID_PASSES {"pass-primary", "pass-backup"}
 #define API_URL "http://url/motion.txt"
 
 #define PWM_FREQ 30000

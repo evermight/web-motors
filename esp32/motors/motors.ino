@@ -20,13 +20,15 @@ PwmDetails pwm = {
   .dutyCycle = PWM_DUTY_CYCLE
 };
 
+const char* ssids[] = SSID_NAMES;
+const char* passes[] = SSID_PASSES;
 void setup() {
   Serial.begin(115200);
   initialize_motors(motor, pwm);
-
+  
   // Connect to internet
   delay(1000);
-  connect_network(SSID_NAME, SSID_PASS, SSID_NAME2, SSID_PASS2);
+  connect_network(ssids, passes);
   get_network_info();
 }
 
@@ -34,6 +36,13 @@ void loop() {
   delay(50);
   
   if(!connected_to_network()) {
+    // Stop the motor
+    move_motors("ss", motor, pwm);
+    
+    // Try to reconnect
+    connect_network(ssids, passes);
+    get_network_info();
+    delay(5000);
     return;
   }
 
