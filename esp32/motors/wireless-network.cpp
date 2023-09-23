@@ -20,9 +20,36 @@ void get_network_info(){
   }
 }
 
-void connect_network(const char* ssid, const char* pass) {
+void connect_network(const char* ssid, const char* pass, const char* ssid2, const char* pass2) {
   WiFi.mode(WIFI_STA); //Optional
-  WiFi.begin(ssid, pass);
+  bool found = false;
+  int n = WiFi.scanNetworks();
+  Serial.println("scan done");
+  if (n == 0)
+  {
+    Serial.println("no networks found");
+    return;
+  }
+  else
+  {
+    for (int i = 0; i < n && !found; ++i)
+    {
+      if(WiFi.SSID(i) == String(ssid)){
+        WiFi.begin(ssid, pass);
+        found = true;
+      }
+    }
+    for (int i = 0; i < n && !found; ++i)
+    {
+      if(WiFi.SSID(i) == String(ssid2)){
+        WiFi.begin(ssid2, pass2);
+        found = true;
+      }
+    }
+  }
+  if(!found) {
+    return;
+  }
   Serial.println("\nConnecting");
 
   while(WiFi.status() != WL_CONNECTED){

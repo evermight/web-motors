@@ -26,12 +26,12 @@ void setup() {
 
   // Connect to internet
   delay(1000);
-  connect_network(SSID_NAME, SSID_PASS);
+  connect_network(SSID_NAME, SSID_PASS, SSID_NAME2, SSID_PASS2);
   get_network_info();
 }
 
 void loop() {
-  delay(100);
+  delay(50);
   
   if(!connected_to_network()) {
     return;
