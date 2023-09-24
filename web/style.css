@@ -5,7 +5,8 @@ body {
 }
 #current-action {
   height: 5rem;
-  display: flex;
+  /* display: flex; turn this on if you need it */
+  display: none;
   align-items: center;
   justify-content: center;
   font-size: 3rem;
@@ -30,8 +31,11 @@ button {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  border: 1px solid #CBF;
+  border: 1px solid #CAF;
   background: #CCF;
+}
+button:focus {
+  background: #CAF;
 }
 button[value="ff"] {
   grid-column: 2/3;
@@ -64,5 +68,10 @@ button[value="fb"] {
   grid-column: 3/4;
   background-color: #EEE;
   border-width: 0 1px 1px 0;
-  border-color: #DDD;
+  border-color: #CCC;
+  transform: scaleX(-100%);
+}
+button[value="bf"]:focus,
+button[value="fb"]:focus {
+  background-color: #CCC;
 }
