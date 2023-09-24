@@ -17,6 +17,7 @@ struct PwmDetails {
   int freq;
   byte resolution;
   byte dutyCycle;
+  byte dutyCycleSlow;
 };
 
 void move_motors(String motion, MotorDetails motor, PwmDetails pwm);

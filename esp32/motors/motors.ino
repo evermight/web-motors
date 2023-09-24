@@ -17,7 +17,8 @@ PwmDetails pwm = {
   .channel2 = PWM_CHANNEL_2,
   .freq = PWM_FREQ,
   .resolution = PWM_RESOLUTION,
-  .dutyCycle = PWM_DUTY_CYCLE
+  .dutyCycle = PWM_DUTY_CYCLE,
+  .dutyCycleSlow = PWM_DUTY_CYCLE_SLOW
 };
 
 const char* ssids[] = SSID_NAMES;
@@ -34,7 +35,7 @@ void setup() {
 }
 
 void loop() {
-  delay(20);
+  delay(LOOP_SPEED);
   
   if(!connected_to_network()) {
     // Stop the motor

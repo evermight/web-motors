@@ -2,9 +2,12 @@
 #define SSID_PASSES {"pass-primary", "pass-backup"}
 #define API_URL "http://url/motion.txt"
 
+#define LOOP_SPEED 20
+
 #define PWM_FREQ 30000
 #define PWM_RESOLUTION 8
 #define PWM_DUTY_CYCLE 255
+#define PWM_DUTY_CYCLE_SLOW 210
 
 #define MOTOR1_PIN1 27
 #define MOTOR1_PIN2 26

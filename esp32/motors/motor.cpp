@@ -21,7 +21,7 @@ void initialize_motors(MotorDetails motor, PwmDetails pwm) {
 void move_motors(String motion, MotorDetails motor, PwmDetails pwm) {
   ledcWrite(pwm.channel1, pwm.dutyCycle);
   ledcWrite(pwm.channel2, pwm.dutyCycle);
-  int slowcycle = 190;
+  int slowcycle = pwm.dutyCycleSlow;
   if(motion == "ff") {
     // Move both motors forwards at maximum speed
     digitalWrite(motor.motor1Pin1, LOW);
