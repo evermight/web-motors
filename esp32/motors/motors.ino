@@ -30,10 +30,11 @@ void setup() {
   delay(1000);
   connect_network(ssids, passes);
   get_network_info();
+  delay(1000);
 }
 
 void loop() {
-  delay(50);
+  delay(20);
   
   if(!connected_to_network()) {
     // Stop the motor
