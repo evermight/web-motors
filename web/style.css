@@ -3,9 +3,11 @@ body {
   font-size: 16px;
   padding: 5vh 5vw;
 }
+#current-action[data-visible="1"] {
+  display: flex;
+}
 #current-action {
   height: 5rem;
-  /* display: flex; turn this on if you need it */
   display: none;
   align-items: center;
   justify-content: center;
@@ -22,7 +24,7 @@ body {
 form {
   display: grid;
   width: 100%;
-  margin: 0 auto;
+  margin: 0 auto 100px auto;
   grid-template: repeat(3, 5rem) / repeat(3, 1fr);
 }
 button {
@@ -74,4 +76,18 @@ button[value="fb"] {
 button[value="bf"]:focus,
 button[value="fb"]:focus {
   background-color: #CCC;
+}
+#enable-debug {
+  text-align: center;
+}
+#enable-debug a {
+  text-decoration: none;
+  color: #333;
+  display: inline-block;
+  border: 1px solid #CCC;
+  background: #ddd;
+  padding: 1em 2em;
+}
+#enable-debug a:hover {
+  background: #CCC;
 }

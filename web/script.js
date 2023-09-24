@@ -9,6 +9,9 @@ const DISPLAY = {
    "fb":{"cls":"invert", "label":"&#9100;"}
 };
 document.addEventListener('DOMContentLoaded', _ => {
+  if(window.location.search.match(/debug=\d+/)) {
+    document.getElementById('current-action').setAttribute('data-visible','1');
+  }
   document.querySelectorAll('[name=action]').forEach(btn => {
     // If there are no other buttons pressed, then stop all actions
     btn.addEventListener('focusout', evt => {
