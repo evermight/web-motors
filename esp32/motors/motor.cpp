@@ -36,6 +36,12 @@ void move_motors(String motion, MotorDetails motor, PwmDetails pwm) {
     digitalWrite(motor.motor2Pin2, LOW);
     ledcWrite(pwm.channel1, slowcycle);
     ledcWrite(pwm.channel2, slowcycle);
+  } else if(motion == "fb") {
+    // Move motor 1 forwards and motor 2 backwards at maximum speed
+    digitalWrite(motor.motor1Pin1, LOW);
+    digitalWrite(motor.motor1Pin2, HIGH);
+    digitalWrite(motor.motor2Pin1, HIGH);
+    digitalWrite(motor.motor2Pin2, LOW);
   } else if(motion == "sf") {
     // Move motor 1 backwards and motor 2 forwards at slow speed
     digitalWrite(motor.motor1Pin1, HIGH);
@@ -50,12 +56,6 @@ void move_motors(String motion, MotorDetails motor, PwmDetails pwm) {
     digitalWrite(motor.motor1Pin2, LOW);
     digitalWrite(motor.motor2Pin1, LOW);
     digitalWrite(motor.motor2Pin2, HIGH);
-  } else if(motion == "fb") {
-    // Move motor 1 forwards and motor 2 backwards at maximum speed
-    digitalWrite(motor.motor1Pin1, LOW);
-    digitalWrite(motor.motor1Pin2, HIGH);
-    digitalWrite(motor.motor2Pin1, HIGH);
-    digitalWrite(motor.motor2Pin2, LOW);
   } else if(motion == "bb") {
     // Move both motors backwards at maximum speed
     digitalWrite(motor.motor1Pin1, HIGH);
