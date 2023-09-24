@@ -8,6 +8,16 @@ const DISPLAY = {
    "ss":{"cls":"", "label":"&#9632;"},
    "fb":{"cls":"invert", "label":"&#9100;"}
 };
+const setBtn = val => {
+  document.querySelectorAll('[name=action]').forEach(btn=>btn.classList.remove('active'));
+  const btn = document.querySelector('[name=action][value='+val+']').classList.add('active');
+  if(btn) {
+    btn.classList.add('active');
+  }
+
+  document.getElementById('current-action').innerHTML = DISPLAY[val].label;
+  document.getElementById('current-action').className = DISPLAY[val].cls;
+};
 document.addEventListener('DOMContentLoaded', _ => {
   if(window.location.search.match(/debug=\d+/)) {
     document.getElementById('current-action').setAttribute('data-visible','1');
@@ -18,19 +28,13 @@ document.addEventListener('DOMContentLoaded', _ => {
       if(document.querySelectorAll('[name="action"]:focus').length < 1) {
         fetch('./process.php?action=ss')
         .then(res => res.text())
-        .then(res => {
-          document.getElementById('current-action').innerHTML = DISPLAY[res].label;
-          document.getElementById('current-action').className = DISPLAY[res].cls;
-        });
+        .then(res => setBtn(res));
       }
     });
     btn.addEventListener('click', evt => 
       fetch('./process.php?action='+evt.currentTarget.value)
       .then(res => res.text())
-      .then(res => {
-        document.getElementById('current-action').innerHTML = DISPLAY[res].label;
-        document.getElementById('current-action').className = DISPLAY[res].cls;
-      })
+      .then(res => setBtn(res))
     );
   });
 });

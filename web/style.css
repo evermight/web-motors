@@ -33,10 +33,10 @@ button {
   flex-wrap: nowrap;
   align-items: center;
   justify-content: center;
-  border: 1px solid #CAF;
+  border: 1px solid #C9F;
   background: #CCF;
 }
-button:focus {
+button.active {
   background: #CAF;
 }
 button[value="ff"] {
@@ -73,8 +73,8 @@ button[value="fb"] {
   border-color: #CCC;
   transform: scaleX(-100%);
 }
-button[value="bf"]:focus,
-button[value="fb"]:focus {
+button[value="bf"].active,
+button[value="fb"].active {
   background-color: #CCC;
 }
 #enable-debug {
