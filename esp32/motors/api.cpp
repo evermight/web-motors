@@ -16,6 +16,7 @@ ApiResponse api_get(String apiUrl) {
 
   // Send HTTP GET request
   response.httpResponseCode = http.GET();
+  Serial.println(apiUrl);
   if(response.httpResponseCode <= 0)
     return response;
 

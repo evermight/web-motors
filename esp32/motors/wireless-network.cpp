@@ -18,12 +18,12 @@ void get_network_info(){
 }
 
 void connect_network(const char* ssid, const char* pass) {
+  WiFi.disconnect();
   WiFi.mode(WIFI_STA); //Optional
   WiFi.begin(ssid, pass);
   Serial.println("\nConnecting");
 
   while(WiFi.status() != WL_CONNECTED){
-      Serial.print(".");
       delay(100);
   }
 
