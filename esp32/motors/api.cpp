@@ -1,5 +1,6 @@
 #include <Arduino.h>
-#include <HTTPClient.h>
+#include <ESP8266HTTPClient.h>
+#include <ESP8266WiFi.h>
 #include "api.h"
 
 ApiResponse api_get(String apiUrl) {
@@ -8,8 +9,8 @@ ApiResponse api_get(String apiUrl) {
 
   response.httpResponseCode = -1;
   response.motion = "";
-
-  http.begin(apiUrl);
+  WiFiClient client;
+  http.begin(client, apiUrl);
   // If you need Node-RED/server authentication, insert user and password below
   //http.setAuthorization("REPLACE_WITH_SERVER_USERNAME", "REPLACE_WITH_SERVER_PASSWORD");
 

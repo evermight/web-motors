@@ -1,7 +1,7 @@
 #include "config.h"
 #include "motor.h"
 #include "wireless-network.h"
-#include "api.h";
+#include "api.h"
 
 MotorDetails motor = {
   .motor1Pin1 = MOTOR1_PIN1,
@@ -28,10 +28,6 @@ void setup() {
   Serial.begin(115200);
   initialize_motors(motor, pwm);
   
-  // Connect to internet
-  delay(1000);
-  connect_network(ssids, passes, ssid_len);
-  get_network_info();
   delay(1000);
 }
 
