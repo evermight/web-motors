@@ -1,5 +1,6 @@
 #define SSID_NAMES {"ssid-primary", "ssid-backup"}
 #define SSID_PASSES {"pass-primary", "pass-backup"}
+#define SSID_LEN 2
 #define API_URL "http://url/motion.txt"
 
 #define LOOP_SPEED 20
@@ -14,7 +15,7 @@
 #define ENABLE1_PIN 14
 #define PWM_CHANNEL_1 0
 
-#define MOTOR2_PIN1 33
-#define MOTOR2_PIN2 32
+#define MOTOR2_PIN1 19
+#define MOTOR2_PIN2 18
 #define ENABLE2_PIN 12
 #define PWM_CHANNEL_2 1

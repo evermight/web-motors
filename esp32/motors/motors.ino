@@ -23,13 +23,14 @@ PwmDetails pwm = {
 
 const char* ssids[] = SSID_NAMES;
 const char* passes[] = SSID_PASSES;
+const int ssid_len = SSID_LEN;
 void setup() {
   Serial.begin(115200);
   initialize_motors(motor, pwm);
   
   // Connect to internet
   delay(1000);
-  connect_network(ssids, passes);
+  connect_network(ssids, passes, ssid_len);
   get_network_info();
   delay(1000);
 }
@@ -42,7 +43,7 @@ void loop() {
     move_motors("ss", motor, pwm);
     
     // Try to reconnect
-    connect_network(ssids, passes);
+    connect_network(ssids, passes, ssid_len);
     get_network_info();
     delay(5000);
     return;
