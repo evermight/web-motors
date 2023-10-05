@@ -2,7 +2,8 @@
 #include "motor.h"
 #include "server.h"
 #include "wireless-network.h"
-#include "api.h"
+//#include "api.h"
+#include "mqtt.h"
 
 MotorDetails motor = {
   .motor1Pin1 = MOTOR1_PIN1,
@@ -27,6 +28,7 @@ void setup() {
   initialize_motors(motor, pwm);
   access_point_start();
   server_start();
+  mqtt_configure();
   delay(5000);
 }
 
@@ -36,8 +38,15 @@ void loop() {
     server_handle_client();
     return;
   }
-  delay(LOOP_SPEED);
+  //delay(LOOP_SPEED);
 
+  if(!mqtt_is_connected()) {
+    mqtt_connect();
+    delay(5000);
+    return;
+  }
+  mqtt_client_loop();
+/*
   if(!connected_to_network()) {
     // Stop the motor
     move_motors("ss", motor, pwm);
@@ -54,4 +63,5 @@ void loop() {
     return;
 
   move_motors(response.motion, motor, pwm);
+*/
 }
