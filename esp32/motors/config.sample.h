@@ -1,7 +1,5 @@
-#define SSID_NAMES {"ssid-primary", "ssid-backup"}
-#define SSID_PASSES {"pass-primary", "pass-backup"}
-#define SSID_LEN 2
-#define API_URL "http://url/motion.txt"
+#define SSID_NAME "esp32"
+#define SSID_PASS "at least 7 characters"
 
 #define LOOP_SPEED 20
 
