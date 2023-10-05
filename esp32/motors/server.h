@@ -3,8 +3,10 @@
 #ifndef SERVER_FUNCTIONS
 #define SERVER_FUNCTIONS
 void access_point_start();
+const char* get_ssid();
+const char* get_pass();
 String get_api_url();
-bool get_connection_status();
+bool ssid_exists();
 void handle_connect();
 void handle_home();
 void server_start();

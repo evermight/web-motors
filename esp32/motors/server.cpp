@@ -6,10 +6,8 @@
 #include <ArduinoJson.h>
 #include "config.h"
 #include "html.h"
-#include "wireless-network.h"
 
 WebServer server(80);
-bool is_connected = false;
 String new_ssid = "";
 String new_pass = "";
 String api_url = "";
@@ -29,11 +27,17 @@ void access_point_start() {
   Serial.print("AP IP address: ");
   Serial.println(myIP);
 }
+const char* get_pass() {
+  return new_pass.c_str();
+}
+const char* get_ssid() {
+  return new_ssid.c_str();
+}
 String get_api_url() {
   return api_url;
 }
-bool get_connection_status() {
-  return is_connected;
+bool ssid_exists() {
+  return new_ssid != "";
 }
 
 void handle_connect() {
@@ -43,10 +47,9 @@ void handle_connect() {
   new_ssid = jsonDocument["ss_id"].as<String>();
   new_pass = jsonDocument["ss_pass"].as<String>();
   api_url = jsonDocument["api_url"].as<String>();
-  connect_network(new_ssid.c_str(), new_pass.c_str());
-  is_connected = true;
-  server.stop();
+
   server.send(200, "text/html", html_current_connection(new_ssid, new_pass, api_url));
+  server.stop();
 }
 
 void handle_home() {

@@ -1,6 +1,7 @@
 #include "config.h"
 #include "motor.h"
 #include "server.h"
+#include "wireless-network.h"
 #include "api.h"
 
 MotorDetails motor = {
@@ -31,23 +32,23 @@ void setup() {
 
 void loop() {
   
-  if(!get_connection_status()) {
+  if(!ssid_exists()) {
     server_handle_client();
     return;
   }
   delay(LOOP_SPEED);
-  /*
+
   if(!connected_to_network()) {
     // Stop the motor
     move_motors("ss", motor, pwm);
     
     // Try to reconnect
-    connect_network(ssids, passes, ssid_len);
+    connect_network(get_ssid(), get_pass());
     get_network_info();
     delay(5000);
     return;
   }
-  */
+
   ApiResponse response = api_get(get_api_url());
   if(response.httpResponseCode <= 0)
     return;
