@@ -20,32 +20,11 @@ void get_network_info(){
   }
 }
 
-void connect_network(const char* ssid[], const char* pass[], const int len) {
+void connect_network(const char* ssid, const char* pass) {
   WiFi.disconnect();
   WiFi.mode(WIFI_STA); //Optional
-
-  int n = WiFi.scanNetworks();
-  Serial.println(String(n) + " networks found");
-  if (n == 0) {
-    return;
-  }
+  WiFi.begin(ssid, pass);
   
-  bool found = false;
-  for (int i = 0; i < n && !found; ++i) {
-    for (int j = 0; j < len && !found; j++) {
-      if(WiFi.SSID(i) == String(ssid[j])){
-        Serial.println("\nConnecting to " + String(ssid[j]));
-        WiFi.begin(ssid[j], pass[j]);
-        found = true;
-      }
-    }
-  }
-
-  if(!found) {
-    Serial.println("Unable to connect to internet");
-    return;
-  }
-
   int dl = 1000;
   int dl_limit = 15*dl;
   int dl_count = 0;
