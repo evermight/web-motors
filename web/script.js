@@ -43,6 +43,8 @@ const MQTTConnect = () => {
     timeout: 3,
     onSuccess: MQTTConnectSuccess,
     userName:username,
+    //useSSL: document.getElementById('mqtt_ssl').value === '1',
+    useSSL: true,
     password,
   };
   MQTT.connect(options);
