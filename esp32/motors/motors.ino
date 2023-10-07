@@ -58,6 +58,9 @@ void loop() {
     delay(5000);
     return;
   }
+
+  // Move motors
+  move_motors(mqtt_get_message(), motor, pwm);
   mqtt_client_loop();
 
 /*
