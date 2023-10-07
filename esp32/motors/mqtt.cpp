@@ -9,26 +9,26 @@ const char* mqtt_topic = MQTT_TOPIC;
 int mqtt_port = MQTT_PORT;
 const char* mqtt_user = MQTT_USER;
 const char* mqtt_pass = MQTT_PASS;
+String msg = "";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+String mqtt_get_message() {
+  return msg;
+}
 
 void mqtt_callback(char* topic, byte* message, unsigned int length) {
-  Serial.print("Message arrived on topic: ");
-  Serial.print(topic);
-  Serial.print(". Message: ");
-  String messageTemp;
+  msg = "";
   
   for (int i = 0; i < length; i++) {
-    Serial.print((char)message[i]);
-    messageTemp += (char)message[i];
+    msg += (char)message[i];
   }
 
   // If a message is received on the topic esp32/output, you check if the message is either "on" or "off". 
   // Changes the output state according to the message
   if (String(topic) == mqtt_topic) {
-    Serial.println(messageTemp);
+    Serial.println(msg);
   }
 }
 
@@ -41,7 +41,7 @@ void mqtt_connect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("ESP8266Client", mqtt_user, mqtt_pass)) {
+    if (client.connect("ESP32Client", mqtt_user, mqtt_pass)) {
       Serial.println("connected, subscribing to");
       Serial.println(mqtt_topic);
       // Subscribe
