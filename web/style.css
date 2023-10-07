@@ -21,7 +21,7 @@ body {
 #current-action.invert {
   transform: scale(-100%, 100%);
 }
-form {
+.direction-pad {
   display: grid;
   width: 100%;
   margin: 0 auto 100px auto;
@@ -91,3 +91,7 @@ button[value="fb"].active {
 #enable-debug a:hover {
   background: #CCC;
 }
+
+.settings {margin-bottom: 50px; display: grid; grid-template: auto / 300px auto; grid-gap: 20px;}
+.settings input, .settings button {padding: 1em 0.5em;}
+.settings h1, .settings h2, .settings button {grid-column: 1/3;}

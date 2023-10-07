@@ -8,6 +8,40 @@ const DISPLAY = {
    "ss":{"cls":"", "label":"&#9632;"},
    "fb":{"cls":"invert", "label":"&#9100;"}
 };
+var MQTT;
+let connected = false;
+
+const MQTTConnect = () => {
+  const host = document.getElementById("mqtt_server").value;
+  const port = parseInt(document.getElementById("mqtt_port").value);
+  const username = document.getElementById("mqtt_user").value;
+  const password = document.getElementById("mqtt_pass").value;
+  const cname="robo-"+Math.floor(Math.random() * 10000);
+
+  MQTT = new Paho.MQTT.Client(host,port,cname);
+  const options = {
+    timeout: 3,
+    onSuccess: ()=> { connected = true; },
+    userName:username,
+    password,
+  };
+  MQTT.connect(options);
+};
+const btnPress = value => {
+  if(connected) {
+    const topic = document.getElementById("mqtt_topic").value;
+    message = new Paho.MQTT.Message(value);
+    message.destinationName = topic;
+    MQTT.send(message);
+  }
+}
+/*
+const btnPress = value => {
+  fetch('./process.php?action='+value)
+  .then(res => res.text())
+  .then(res => setBtn(res))
+}
+*/
 const setBtn = val => {
   document.querySelectorAll('[name=action]').forEach(btn=>btn.classList.remove('active'));
   const btn = document.querySelector('[name=action][value='+val+']').classList.add('active');
@@ -31,10 +65,6 @@ document.addEventListener('DOMContentLoaded', _ => {
         .then(res => setBtn(res));
       }
     });
-    btn.addEventListener('click', evt => 
-      fetch('./process.php?action='+evt.currentTarget.value)
-      .then(res => res.text())
-      .then(res => setBtn(res))
-    );
+    btn.addEventListener('click', evt => btnPress(evt.currentTarget.value));
   });
 });
