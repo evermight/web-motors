@@ -3,6 +3,7 @@
 #ifndef SETUP_FUNCTIONS
 #define SETUP_FUNCTIONS
 void setup_access_point_start();
+bool setup_mqtt_ssl_get();
 const char* setup_mqtt_server_get();
 int setup_mqtt_port_get();
 const char* setup_mqtt_topic_get();

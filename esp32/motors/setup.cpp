@@ -11,6 +11,7 @@ WebServer server(80);
 String new_ssid = "";
 String new_pass = "";
 String api_url = "";
+String mqtt_ssl = "";
 String mqtt_server = "";
 String mqtt_port = "";
 String mqtt_topic = "";
@@ -44,6 +45,9 @@ String setup_api_url_get() {
 bool setup_wifi_ssid_exists() {
   return new_ssid != "";
 }
+bool setup_mqtt_ssl_get() {
+  return mqtt_ssl === "1";
+}
 const char* setup_mqtt_server_get() {
   return mqtt_server.c_str();
 }
@@ -66,6 +70,7 @@ void handle_connect() {
   new_ssid = jsonDocument["ss_id"].as<String>();
   new_pass = jsonDocument["ss_pass"].as<String>();
   api_url = jsonDocument["api_url"].as<String>();
+  mqtt_ssl = jsonDocument["mqtt_ssl"].as<String>();
   mqtt_server = jsonDocument["mqtt_server"].as<String>();
   mqtt_port = jsonDocument["mqtt_port"].as<String>();
   mqtt_topic = jsonDocument["mqtt_topic"].as<String>();
@@ -75,6 +80,7 @@ void handle_connect() {
   String json = "{\"ss_id\":\""+new_ssid+"\"";
   json += ",\"ss_pass\":\""+new_pass+"\"";
   json += ",\"api_url\":\""+api_url+"\"";
+  json += ",\"mqtt_ssl\":\""+mqtt_ssl+"\"";
   json += ",\"mqtt_server\":\""+mqtt_server+"\"";
   json += ",\"mqtt_port\":\""+mqtt_port+"\"";
   json += ",\"mqtt_topic\":\""+mqtt_topic+"\"";
