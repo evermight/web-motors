@@ -1,7 +1,9 @@
 body {
   font-family: arial;
   font-size: 16px;
-  padding: 5vh 5vw;
+  box-sizing: border-box;
+  padding: 1em;
+  margin: auto;
 }
 #current-action[data-visible="1"] {
   display: flex;
@@ -96,7 +98,7 @@ button[value="fb"].active {
   background: #CCC;
 }
 
-.settings {margin-bottom: 50px; display: none; grid-template: auto / 300px auto; grid-gap: 20px;}
+.settings {margin-bottom: 50px; display: none; grid-template: auto / 30vw auto; grid-gap: 20px;}
 .settings.enable { display: grid; }
 .settings input, .settings button {padding: 1em 0.5em;}
 .settings h1, .settings h2, .settings button {grid-column: 1/3;}
