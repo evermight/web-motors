@@ -21,7 +21,7 @@ String mqtt_pass = "";
 const char *ssid = SSID_NAME;
 const char *password = SSID_PASS;
 
-void access_point_start() {
+void setup_access_point_start() {
   // You can remove the password parameter if you want the AP to be open.
   // a valid password must have more than 7 characters
   if (!WiFi.softAP(ssid, password)) {
@@ -32,31 +32,31 @@ void access_point_start() {
   Serial.print("AP IP address: ");
   Serial.println(myIP);
 }
-const char* get_pass() {
+const char* setup_wifi_pass_get() {
   return new_pass.c_str();
 }
-const char* get_ssid() {
+const char* setup_wifi_ssid_get() {
   return new_ssid.c_str();
 }
-String get_api_url() {
+String setup_api_url_get() {
   return api_url;
 }
-bool ssid_exists() {
+bool setup_wifi_ssid_exists() {
   return new_ssid != "";
 }
-const char* get_mqtt_server() {
+const char* setup_mqtt_server_get() {
   return mqtt_server.c_str();
 }
-int get_mqtt_port() {
+int setup_mqtt_port_get() {
   return mqtt_port.toInt();
 }
-const char* get_mqtt_topic() {
+const char* setup_mqtt_topic_get() {
   return mqtt_topic.c_str();
 }
-const char* get_mqtt_user() {
+const char* setup_mqtt_user_get() {
   return mqtt_user.c_str();
 }
-const char* get_mqtt_pass() {
+const char* setup_mqtt_pass_get() {
   return mqtt_pass.c_str();
 }
 void handle_connect() {
@@ -90,14 +90,14 @@ void handle_home() {
   server.send(200,"text/html",html());
 }
 
-void server_start() {
+void setup_start() {
   server.on("/", handle_home);
   server.on("/connect", HTTP_POST, handle_connect);
   server.begin();
 }
-void server_stop() {
+void setup_stop() {
   server.stop();
 }
-void server_handle_client() {
+void setup_handle_client() {
   server.handleClient();
 }

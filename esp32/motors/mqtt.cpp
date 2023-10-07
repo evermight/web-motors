@@ -16,7 +16,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 
-String mqtt_get_message() {
+String mqtt_message_get() {
   return msg;
 }
 

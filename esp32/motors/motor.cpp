@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "motor.h"
 
-void initialize_motors(MotorDetails motor, PwmDetails pwm) {
+void motor_init(MotorDetails motor, PwmDetails pwm) {
   // sets the pins as outputs:
   pinMode(motor.motor1Pin1, OUTPUT);
   pinMode(motor.motor1Pin2, OUTPUT);
@@ -18,7 +18,7 @@ void initialize_motors(MotorDetails motor, PwmDetails pwm) {
   ledcAttachPin(motor.enable1Pin, pwm.channel1);
   ledcAttachPin(motor.enable2Pin, pwm.channel2);
 }
-void move_motors(String motion, MotorDetails motor, PwmDetails pwm) {
+void motor_move(String motion, MotorDetails motor, PwmDetails pwm) {
   ledcWrite(pwm.channel1, pwm.dutyCycle);
   ledcWrite(pwm.channel2, pwm.dutyCycle);
   int slowcycle = pwm.dutyCycleSlow;

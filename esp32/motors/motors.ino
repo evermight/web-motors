@@ -1,6 +1,6 @@
 #include "config.h"
 #include "motor.h"
-#include "server.h"
+#include "setup.h"
 #include "wireless-network.h"
 //#include "api.h"
 #include "mqtt.h"
@@ -25,47 +25,47 @@ PwmDetails pwm = {
 
 void setup() {
   Serial.begin(115200);
-  initialize_motors(motor, pwm);
-  access_point_start();
-  server_start();
+  motor_init(motor, pwm);
+  setup_access_point_start();
+  setup_start();
   delay(5000);
 }
 
 void loop() {
 
   // Ensure wifi credentials for internet
-  if(!ssid_exists()) {
-    server_handle_client();
+  if(!setup_wifi_ssid_exists()) {
+    setup_handle_client();
     return;
   }
 
   // Ensure internet access
   if(!connected_to_network()) {
     // Stop the motor
-    move_motors("ss", motor, pwm);
+    motor_move("ss", motor, pwm);
 
     // Try to reconnect
-    connect_network(get_ssid(), get_pass());
+    connect_network(setup_wifi_ssid_get(), setup_wifi_pass_get());
     get_network_info();
     delay(5000);
     return;
   }
 
-  // Ensure access
+  // Ensure MQTT access
   if(!mqtt_is_connected()) {
-    mqtt_configure(get_mqtt_server(), get_mqtt_port());
-    mqtt_connect(get_mqtt_topic(), get_mqtt_user(), get_mqtt_pass());
+    mqtt_configure(setup_mqtt_server_get(), setup_mqtt_port_get());
+    mqtt_connect(setup_mqtt_topic_get(), setup_mqtt_user_get(), setup_mqtt_pass_get());
     delay(5000);
     return;
   }
 
   // Move motors
-  move_motors(mqtt_get_message(), motor, pwm);
+  motor_move(mqtt_message_get(), motor, pwm);
   mqtt_client_loop();
 
 /*
   delay(LOOP_SPEED);
-  ApiResponse response = api_get(get_api_url());
+  ApiResponse response = api_get(setup_api_url_get());
   if(response.httpResponseCode <= 0)
     return;
 
