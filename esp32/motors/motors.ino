@@ -28,7 +28,6 @@ void setup() {
   initialize_motors(motor, pwm);
   access_point_start();
   server_start();
-  mqtt_configure();
   delay(5000);
 }
 
@@ -54,7 +53,8 @@ void loop() {
 
   // Ensure access
   if(!mqtt_is_connected()) {
-    mqtt_connect();
+    mqtt_configure(get_mqtt_server(), get_mqtt_port());
+    mqtt_connect(get_mqtt_topic(), get_mqtt_user(), get_mqtt_pass());
     delay(5000);
     return;
   }

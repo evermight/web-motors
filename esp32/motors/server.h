@@ -3,6 +3,11 @@
 #ifndef SERVER_FUNCTIONS
 #define SERVER_FUNCTIONS
 void access_point_start();
+const char* get_mqtt_server();
+int get_mqtt_port();
+const char* get_mqtt_topic();
+const char* get_mqtt_user();
+const char* get_mqtt_pass();
 const char* get_ssid();
 const char* get_pass();
 String get_api_url();

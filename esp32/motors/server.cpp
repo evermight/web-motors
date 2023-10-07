@@ -11,6 +11,11 @@ WebServer server(80);
 String new_ssid = "";
 String new_pass = "";
 String api_url = "";
+String mqtt_server = "";
+String mqtt_port = "";
+String mqtt_topic = "";
+String mqtt_user = "";
+String mqtt_pass = "";
 
 // Set these to your desired credentials.
 const char *ssid = SSID_NAME;
@@ -39,7 +44,21 @@ String get_api_url() {
 bool ssid_exists() {
   return new_ssid != "";
 }
-
+const char* get_mqtt_server() {
+  return mqtt_server.c_str();
+}
+int get_mqtt_port() {
+  return mqtt_port.toInt();
+}
+const char* get_mqtt_topic() {
+  return mqtt_topic.c_str();
+}
+const char* get_mqtt_user() {
+  return mqtt_user.c_str();
+}
+const char* get_mqtt_pass() {
+  return mqtt_pass.c_str();
+}
 void handle_connect() {
   String body = server.arg("plain");
   StaticJsonDocument<250> jsonDocument;
@@ -47,15 +66,20 @@ void handle_connect() {
   new_ssid = jsonDocument["ss_id"].as<String>();
   new_pass = jsonDocument["ss_pass"].as<String>();
   api_url = jsonDocument["api_url"].as<String>();
+  mqtt_server = jsonDocument["mqtt_server"].as<String>();
+  mqtt_port = jsonDocument["mqtt_port"].as<String>();
+  mqtt_topic = jsonDocument["mqtt_topic"].as<String>();
+  mqtt_user = jsonDocument["mqtt_user"].as<String>();
+  mqtt_pass = jsonDocument["mqtt_pass"].as<String>();
 
-  server.send(200, "text/html", html_current_connection(new_ssid, new_pass, api_url));
+  server.send(200, "text/html", html_current_connection(new_ssid, new_pass, api_url, mqtt_server, mqtt_port, mqtt_topic, mqtt_user, mqtt_pass));
   server.stop();
 }
 
 void handle_home() {
   String html = html_head();
   html += html_form();
-  html += "<form id=\"current\">" + html_current_connection(new_ssid, new_pass, api_url) + "</form>";
+  html += "<form id=\"current\">" + html_current_connection(new_ssid, new_pass, api_url, mqtt_server, mqtt_port, mqtt_topic, mqtt_user, mqtt_pass) + "</form>";
   html += html_foot();
 
   server.send(200,"text/html",html);

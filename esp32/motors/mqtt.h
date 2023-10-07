@@ -4,8 +4,8 @@
 
 String mqtt_get_message();
 void mqtt_callback(char* topic, byte* message, unsigned int length);
-void mqtt_configure();
-void mqtt_connect();
+void mqtt_configure(const char* mqtt_server, int mqtt_port);
+void mqtt_connect(const char* mqtt_topic, const char* mqtt_user, const char* mqtt_pass);
 bool mqtt_is_connected();
 void mqtt_client_loop();
 

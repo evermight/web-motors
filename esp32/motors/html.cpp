@@ -18,8 +18,15 @@ String html_script() {
   html += "fetch('/connect',{";
   html += "  'headers':{'Content-Type':'application/json','Accept':'application/json'},";
   html += "  'method':'post',";
-  html += "  'body':JSON.stringify({'ss_id': document.getElementById('ss_id').value,'ss_pass':document.getElementById('ss_pass').value,'api_url':document.getElementById('api_url').value})";
-  html += "})";
+  html += "  'body':JSON.stringify({'ss_id': document.getElementById('ss_id').value";
+  html += ",'ss_pass':document.getElementById('ss_pass').value";
+  html += ",'api_url':document.getElementById('api_url').value";
+  html += ",'mqtt_server':document.getElementById('mqtt_server').value";
+  html += ",'mqtt_port':document.getElementById('mqtt_port').value";
+  html += ",'mqtt_topic':document.getElementById('mqtt_topic').value";
+  html += ",'mqtt_user':document.getElementById('mqtt_user').value";
+  html += ",'mqtt_pass':document.getElementById('mqtt_pass').value";
+  html += "})})";
   html += ".then(r=>r.text())";
   html += ".then(r=>{document.getElementById('current').innerHTML = r;});";
   html +="}</script>";
@@ -32,16 +39,26 @@ String html_form() {
   html += "<label>SSID</label><input id=\"ss_id\" />";
   html += "<label>PASS</label><input id=\"ss_pass\" type=\"password\" />";
   html += "<label>API_URL</label><input id=\"api_url\" type=\"url\" />";
+  html += "<label>MQTT_SERVER</label><input id=\"mqtt_server\" type=\"url\"/>";
+  html += "<label>MQTT_PORT</label><input id=\"mqtt_port\" type=\"number\" />";
+  html += "<label>MQTT_TOPIC</label><input id=\"mqtt_topic\" />";
+  html += "<label>MQTT_USER</label><input id=\"mqtt_user\" />";
+  html += "<label>MQTT_PASS</label><input id=\"mqtt_pass\" type=\"password\" />";
   html += "<button type=\"button\" onClick=\"send();\">Save</button>";
   html += "</form>";
   return html;
 }
 
-String html_current_connection(String new_ssid, String new_pass, String api_url) {
+String html_current_connection(String new_ssid, String new_pass, String api_url, String mqtt_server, String mqtt_port, String mqtt_topic, String mqtt_user, String mqtt_pass) {
   String html = "<h2>Current Settings</h2>";
   html += "<label>SSID</label><span>" + new_ssid + "</span>";
   html += "<label>PASS</label><span data-msg=\""+ new_pass +"\" onClick=\"this.innerHTML = this.getAttribute('data-msg')\">***click to show***</span>";
   html += "<label>API_URL</label><span>" + api_url + "</span>";
+  html += "<label>MQTT_SERVER</label><span>" + mqtt_server + "</span>";
+  html += "<label>MQTT_PORT</label><span>" + mqtt_port + "</span>";
+  html += "<label>MQTT_TOPIC</label><span>" + mqtt_topic + "</span>";
+  html += "<label>MQTT_USER</label><span>" + mqtt_user + "</span>";
+  html += "<label>MQTT_PASS</label><span data-msg=\""+ mqtt_pass +"\" onClick=\"this.innerHTML = this.getAttribute('data-msg')\">***click to show***</span>";
   return html;
 }
 
