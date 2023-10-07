@@ -9,8 +9,28 @@ const DISPLAY = {
    "fb":{"cls":"invert", "label":"&#9100;"}
 };
 var MQTT;
-let connected = false;
+const fields = 'mqtt_server,mqtt_port,mqtt_topic,mqtt_user,mqtt_pass'.split(',');
 
+const loadSettingsFromLocalStorage = () => {
+  fields.forEach(item=>document.getElementById(item).value = localStorage.getItem(item));
+}
+
+const loadSettingsFromUrl = () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  fields.forEach(field => {
+    const param = urlParams.get(field);
+    if(param) {
+      document.getElementById(field).value = param;
+    }
+  });
+}
+const MQTTConnectSuccess = () => {
+  document.querySelector('.direction-pad').classList.add('enable');
+  document.querySelector('.settings').classList.remove('enable');
+
+  fields
+    .forEach(item=>localStorage.setItem(item,document.getElementById(item).value));
+};
 const MQTTConnect = () => {
   const host = document.getElementById("mqtt_server").value;
   const port = parseInt(document.getElementById("mqtt_port").value);
@@ -21,19 +41,17 @@ const MQTTConnect = () => {
   MQTT = new Paho.MQTT.Client(host,port,cname);
   const options = {
     timeout: 3,
-    onSuccess: ()=> { connected = true; },
+    onSuccess: MQTTConnectSuccess,
     userName:username,
     password,
   };
   MQTT.connect(options);
 };
 const btnPress = value => {
-  if(connected) {
-    const topic = document.getElementById("mqtt_topic").value;
-    message = new Paho.MQTT.Message(value);
-    message.destinationName = topic;
-    MQTT.send(message);
-  }
+	const topic = document.getElementById("mqtt_topic").value;
+	message = new Paho.MQTT.Message(value);
+	message.destinationName = topic;
+	MQTT.send(message);
 }
 /*
 const btnPress = value => {
@@ -67,4 +85,6 @@ document.addEventListener('DOMContentLoaded', _ => {
     });
     btn.addEventListener('click', evt => btnPress(evt.currentTarget.value));
   });
+  loadSettingsFromLocalStorage();
+  loadSettingsFromUrl();
 });

@@ -22,11 +22,15 @@ body {
   transform: scale(-100%, 100%);
 }
 .direction-pad {
-  display: grid;
+  display: none;
   width: 100%;
   margin: 0 auto 100px auto;
   grid-template: repeat(3, 5rem) / repeat(3, 1fr);
 }
+.direction-pad.enable {
+  display:grid;
+}
+
 button {
   font-size: 3rem;
   display: flex;
@@ -92,6 +96,7 @@ button[value="fb"].active {
   background: #CCC;
 }
 
-.settings {margin-bottom: 50px; display: grid; grid-template: auto / 300px auto; grid-gap: 20px;}
+.settings {margin-bottom: 50px; display: none; grid-template: auto / 300px auto; grid-gap: 20px;}
+.settings.enable { display: grid; }
 .settings input, .settings button {padding: 1em 0.5em;}
 .settings h1, .settings h2, .settings button {grid-column: 1/3;}
