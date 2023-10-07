@@ -61,7 +61,7 @@ const char* setup_mqtt_pass_get() {
 }
 void handle_connect() {
   String body = server.arg("plain");
-  StaticJsonDocument<250> jsonDocument;
+  StaticJsonDocument<1028> jsonDocument;
   deserializeJson(jsonDocument, body);
   new_ssid = jsonDocument["ss_id"].as<String>();
   new_pass = jsonDocument["ss_pass"].as<String>();
