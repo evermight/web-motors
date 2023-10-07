@@ -9,7 +9,7 @@ const DISPLAY = {
    "fb":{"cls":"invert", "label":"&#9100;"}
 };
 var MQTT;
-const fields = 'mqtt_server,mqtt_port,mqtt_topic,mqtt_user,mqtt_pass'.split(',');
+const fields = 'mqtt_ssl,mqtt_server,mqtt_port,mqtt_topic,mqtt_user,mqtt_pass'.split(',');
 
 const loadSettingsFromLocalStorage = () => {
   fields.forEach(item=>document.getElementById(item).value = localStorage.getItem(item));
@@ -43,8 +43,7 @@ const MQTTConnect = () => {
     timeout: 3,
     onSuccess: MQTTConnectSuccess,
     userName:username,
-    //useSSL: document.getElementById('mqtt_ssl').value === '1',
-    useSSL: true,
+    useSSL: document.getElementById('mqtt_ssl').value === '1',
     password,
   };
   MQTT.connect(options);
@@ -54,6 +53,7 @@ const btnPress = value => {
 	message = new Paho.MQTT.Message(value);
 	message.destinationName = topic;
 	MQTT.send(message);
+	setBtn(value);
 }
 /*
 const btnPress = value => {
@@ -77,14 +77,14 @@ document.addEventListener('DOMContentLoaded', _ => {
     document.getElementById('current-action').setAttribute('data-visible','1');
   }
   document.querySelectorAll('[name=action]').forEach(btn => {
+/*
     // If there are no other buttons pressed, then stop all actions
     btn.addEventListener('focusout', evt => {
       if(document.querySelectorAll('[name="action"]:focus').length < 1) {
-        fetch('./process.php?action=ss')
-        .then(res => res.text())
-        .then(res => setBtn(res));
+        btnPress('ss');
       }
     });
+*/
     btn.addEventListener('click', evt => btnPress(evt.currentTarget.value));
   });
   loadSettingsFromLocalStorage();

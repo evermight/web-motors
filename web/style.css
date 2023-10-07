@@ -100,5 +100,5 @@ button[value="fb"].active {
 
 .settings {margin-bottom: 50px; display: none; grid-template: auto / 30vw auto; grid-gap: 20px;}
 .settings.enable { display: grid; }
-.settings input, .settings button {padding: 1em 0.5em;}
+.settings input, .settings button, .settings select {padding: 1em 0.5em;}
 .settings h1, .settings h2, .settings button {grid-column: 1/3;}
