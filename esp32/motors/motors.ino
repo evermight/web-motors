@@ -33,24 +33,18 @@ void setup() {
 }
 
 void loop() {
-  
+
+  // Ensure wifi credentials for internet
   if(!ssid_exists()) {
     server_handle_client();
     return;
   }
-  //delay(LOOP_SPEED);
 
-  if(!mqtt_is_connected()) {
-    mqtt_connect();
-    delay(5000);
-    return;
-  }
-  mqtt_client_loop();
-/*
+  // Ensure internet access
   if(!connected_to_network()) {
     // Stop the motor
     move_motors("ss", motor, pwm);
-    
+
     // Try to reconnect
     connect_network(get_ssid(), get_pass());
     get_network_info();
@@ -58,6 +52,16 @@ void loop() {
     return;
   }
 
+  // Ensure access
+  if(!mqtt_is_connected()) {
+    mqtt_connect();
+    delay(5000);
+    return;
+  }
+  mqtt_client_loop();
+
+/*
+  delay(LOOP_SPEED);
   ApiResponse response = api_get(get_api_url());
   if(response.httpResponseCode <= 0)
     return;

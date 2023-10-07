@@ -24,9 +24,6 @@ void mqtt_callback(char* topic, byte* message, unsigned int length) {
     Serial.print((char)message[i]);
     messageTemp += (char)message[i];
   }
-  Serial.println();
-
-  // Feel free to add more if statements to control more GPIOs with MQTT
 
   // If a message is received on the topic esp32/output, you check if the message is either "on" or "off". 
   // Changes the output state according to the message
@@ -45,8 +42,10 @@ void mqtt_connect() {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     if (client.connect("ESP8266Client", mqtt_user, mqtt_pass)) {
-      Serial.println("connected");
+      Serial.println("connected, subscribing to");
+      Serial.println(mqtt_topic);
       // Subscribe
+      client.setCallback(mqtt_callback);
       client.subscribe(mqtt_topic);
     } else {
       Serial.print("failed, rc=");
