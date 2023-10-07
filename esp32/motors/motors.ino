@@ -1,7 +1,7 @@
 #include "config.h"
 #include "motor.h"
 #include "setup.h"
-#include "wireless-network.h"
+#include "wifi.h"
 //#include "api.h"
 #include "mqtt.h"
 
@@ -40,13 +40,13 @@ void loop() {
   }
 
   // Ensure internet access
-  if(!connected_to_network()) {
+  if(!wifi_is_connected()) {
     // Stop the motor
     motor_move("ss", motor, pwm);
 
     // Try to reconnect
-    connect_network(setup_wifi_ssid_get(), setup_wifi_pass_get());
-    get_network_info();
+    wifi_connect(setup_wifi_ssid_get(), setup_wifi_pass_get());
+    wifi_info_get();
     delay(5000);
     return;
   }
