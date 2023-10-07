@@ -72,17 +72,22 @@ void handle_connect() {
   mqtt_user = jsonDocument["mqtt_user"].as<String>();
   mqtt_pass = jsonDocument["mqtt_pass"].as<String>();
 
-  server.send(200, "text/html", html_current_connection(new_ssid, new_pass, api_url, mqtt_server, mqtt_port, mqtt_topic, mqtt_user, mqtt_pass));
+  String json = "{\"ss_id\":\""+new_ssid+"\"";
+  json += ",\"ss_pass\":\""+new_pass+"\"";
+  json += ",\"api_url\":\""+api_url+"\"";
+  json += ",\"mqtt_server\":\""+mqtt_server+"\"";
+  json += ",\"mqtt_port\":\""+mqtt_port+"\"";
+  json += ",\"mqtt_topic\":\""+mqtt_topic+"\"";
+  json += ",\"mqtt_user\":\""+mqtt_user+"\"";
+  json += ",\"mqtt_pass\":\""+mqtt_pass+"\"";
+  json += "}";
+  server.send(200, "application/json", json);
   server.stop();
 }
 
 void handle_home() {
-  String html = html_head();
-  html += html_form();
-  html += "<form id=\"current\">" + html_current_connection(new_ssid, new_pass, api_url, mqtt_server, mqtt_port, mqtt_topic, mqtt_user, mqtt_pass) + "</form>";
-  html += html_foot();
 
-  server.send(200,"text/html",html);
+  server.send(200,"text/html",html());
 }
 
 void server_start() {
