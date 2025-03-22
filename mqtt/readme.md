@@ -1,9 +1,12 @@
-# Instructions
+# Setup
 
 Install with
 
 ```
-sudo apt-get install -y mosquitto mosquitto-clients
+# for the server
+sudo apt-get install -y mosquitto
+# for the linux client
+sudo apt-get install -y mosquitto-clients
 ```
 
 Make a backup of `/etc/mosquitto.conf`.
@@ -43,3 +46,7 @@ Test connection with these commands from two different sessions:
 mosquitto_pub -t hello -h localhost -p 9100 -u [username] -P [password] -m "hi"
 mosquitto_sub -t hello -h localhost -p 9100 -u [username] -P [password]
 ```
+
+You can also use port 9101 as mentioned in the `mosquitto.conf` file for the TLS.
+
+For web clients, it must connect on port 9102.

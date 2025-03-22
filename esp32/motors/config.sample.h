@@ -1,6 +1,8 @@
 #define SSID_NAME "esp32"
 #define SSID_PASS "at least 7 characters"
 
+// pin information for TB212A1 6612FNG
+
 #define LOOP_SPEED 20
 
 #define PWM_FREQ 30000
